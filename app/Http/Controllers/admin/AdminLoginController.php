@@ -18,10 +18,9 @@ class AdminLoginController extends Controller
             'password' =>'required'
         ]);
 
-        if ($validator->passes()){
+        if($validator->passes()){
 
-        }
-        else {
+        } else {
             return redirect()->route('admin.login')
                 ->withErrors($validator)
                 ->withInput($request->only('email'));
