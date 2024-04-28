@@ -59,7 +59,7 @@
 @endsection
 
 @section('customJs')
-<script>
+<script> // create ajax
 $("#categoryForm").submit(function(event){
 	event.preventDefault();
 	var element = $(this)
