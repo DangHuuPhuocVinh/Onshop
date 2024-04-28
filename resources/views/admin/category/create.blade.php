@@ -60,5 +60,20 @@
 
 @section('customJs')
 <script>
+$("#categoryForm").submit(function(event){
+	event.preventDefault();
+	var element = $(this)
+	$.ajax({
+		url:'{{ route("categories.store") }}',
+		type:'post',
+		data: element.serializeArray(),
+		dataType: 'json',
+		success: function(response){
+
+		}, error: function(jqXHR, exception){
+			console.log("Something went wrong");
+		}
+	})
+});
 </script>
 @endsection
