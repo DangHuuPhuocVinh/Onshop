@@ -62,32 +62,37 @@
 
 @section('customJs')
 <script>
-$("#categoryForm").submit(function(event){
-	event.preventDefault();
-	var element = $(this)
-	$.ajax({
-		url:'{{ route("categories.store") }}',
-		type:'post',
-		data: element.serializeArray(),
-		dataType: 'json',
-		success: function(response){
-			var errors = response['errors'];
-			
-			if(response['status']){
-				$("#name").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name']);
-			} else {
-				$("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
-			}
+	$("#categoryForm").submit(function(event) {
+		event.preventDefault();
+		var element = $(this)
+		$.ajax({
+			url: '{{ route("categories.store") }}',
+			type: 'post',
+			data: element.serializeArray(),
+			dataType: 'json',
+			success: function(response) {
+				if (response["status"] == true) {
+					$("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+					$("#slug").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+				} else {
+					var errors = response['errors'];
+					if (response['status']) {
+						$("#name").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['name']);
+					} else {
+						$("#name").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+					}
 
-			if(response['slug']){
-				$("#slug").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['slug']);
-			} else {
-				$("#slug").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+					if (response['slug']) {
+						$("#slug").addClass('is-invalid').siblings('p').addClass('invalid-feedback').html(errors['slug']);
+					} else {
+						$("#slug").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("");
+					}
+				}
+			},
+			error: function(jqXHR, exception) {
+				console.log("Something went wrong");
 			}
-		}, error: function(jqXHR, exception){
-			console.log("Something went wrong");
-		}
-	})
-});
+		})
+	});
 </script>
 @endsection
