@@ -30,6 +30,8 @@ class CategoryController extends Controller
             $category->status = $request->status;
             $category->save();
 
+            $request->session()->flash('sucess', 'Category added sucessfully');
+
             return response()->json([
                 'status' => true,
                 'message' => 'Category added sucessfully'
